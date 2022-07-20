@@ -1,6 +1,7 @@
 {
     "chains": [
         {
+            "authorizers": [],
             "contracs": {
                 "AirnodeRrpV0": "0xa0AD79D995DdeeB18a14eAef56A549A04e3Aa1Bd"
             },
@@ -45,7 +46,7 @@
         "stage": "dev"
     },
     "triggers": {
-        "rpp": [
+        "rrp": [
             {
                 "endpointId": "0x015ee78a417068069c638d6dd005170e023cbfaebac8d4e0b0b3f604b02ff1c9",
                 "oisTitle": "pyLiquidService",

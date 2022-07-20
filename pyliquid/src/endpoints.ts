@@ -6,7 +6,6 @@ const endPoints: string[] = [
     "root",
     "internalWallet"
 ];
-const stage = "dev";
 
 export async function deriveEndpoints(title: string, endPointsNames: string[]) {
     let derivedEndpoints = [];
@@ -22,7 +21,7 @@ export async function deriveEndpoints(title: string, endPointsNames: string[]) {
 
 const main = async () => {
     const pyLiquid = await deriveEndpoints(oisTitle, endPoints);
-    writeJsonFile({data: pyLiquid, path: `/pyliquid/config/${stage}/endpointIds.json`});
+    writeJsonFile({data: pyLiquid, path: `/pyliquid/assets/endpointIds.json`});
 }
 
 main();
