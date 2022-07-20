@@ -1,0 +1,106 @@
+{
+    "chains": [
+        {
+            "contracs": {
+                "AirnodeRrpV0": "0xa0AD79D995DdeeB18a14eAef56A549A04e3Aa1Bd"
+            },
+            "id": "1",
+            "providers": {
+                "rinkeby": {
+                    "url": "${RINKEBY_PROVIDER_URL}"
+                }
+            },
+            "type": "evm",
+            "options": {
+                "txType": "eip1559",
+                "priorityFee": {
+                    "unit": "gwei"
+                },
+                "fulfillmentGasLimit": 500000
+            },
+            "maxConcurrency": 100
+        }
+    ],
+    "nodeSettings": {
+        "nodeVersion": "0.7.2",
+        "cloudProvider": {
+            "type": "aws",
+            "region": "us-east-1",
+            "disableConcurrencyReservations": false
+        },
+        "airnodeWalletMnemonic": "${AIRNODE_WALLET_MNEMONIC}",
+        "heartbeat": {
+            "enabled": false
+        },
+        "httpGateway": {
+            "enabled": true,
+            "apiKey": "${HTTP_GATEWAY_API_KEY}",
+            "maxConcurrency": 20
+        },
+        "httpSignedDataGateway": {
+            "enabled": false
+        },
+        "logFormat": "plain",
+        "logLevel": "DEBUG",
+        "stage": "dev"
+    },
+    "triggers": {
+        "rpp": [
+            {
+                "endpointId": "0x015ee78a417068069c638d6dd005170e023cbfaebac8d4e0b0b3f604b02ff1c9",
+                "oisTitle": "pyLiquidService",
+                "endpointName": "internalWallet"
+            }
+        ],
+        "http": [
+            {
+                "endpointId": "0xc4235409221ee44ab4cfee9d170e4d21db2e54f4fdfe5a6c71659c64c3250ad6",
+                "oisTitle": "pyLiquidService",
+                "endpointName": "root"
+            }
+        ]
+    },
+    "templates": [],
+    "ois": [
+        {
+            "oisFormat": "1.0.0",
+            "title": "pyLiquidService",
+            "version": "1.0.0",
+            "apiSpecifications": {
+                "servers": [
+                    {
+                        "url": "http://127.0.0.1:8000"
+                    }
+                ],
+                "paths": {
+                    "/internal/wallet" : {
+                        "get": {   
+                        }
+                    }
+                },
+                "components": {
+                    "securitySchemes": {}
+                },
+                "security": {}
+            },
+            "endpoints": [
+                {
+                    "name":"root",
+                    "operation": {
+                        "method": "get",
+                        "path": "/"
+                    }
+                },
+                {
+                    "name": "internalWallet",
+                    "operation": {
+                        "method": "get",
+                        "path": "/internal/wallet"
+                    },
+                    "fixedOperationParameters": []
+                }
+            ]
+        }
+    ],
+    "apiCredentials": []
+}
