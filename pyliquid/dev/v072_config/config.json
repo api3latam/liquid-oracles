@@ -2,10 +2,10 @@
     "chains": [
         {
             "authorizers": [],
-            "contracs": {
+            "contracts": {
                 "AirnodeRrpV0": "0xa0AD79D995DdeeB18a14eAef56A549A04e3Aa1Bd"
             },
-            "id": "1",
+            "id": "4",
             "providers": {
                 "rinkeby": {
                     "url": "${RINKEBY_PROVIDER_URL}"
@@ -14,9 +14,6 @@
             "type": "evm",
             "options": {
                 "txType": "eip1559",
-                "priorityFee": {
-                    "unit": "gwei"
-                },
                 "fulfillmentGasLimit": 500000
             },
             "maxConcurrency": 100
@@ -74,8 +71,15 @@
                     }
                 ],
                 "paths": {
+                    "/" : {
+                        "get": {
+                            "parameters": []
+                        }
+        
+                    },
                     "/internal/wallet" : {
                         "get": {   
+                            "parameters": []
                         }
                     }
                 },
@@ -90,7 +94,10 @@
                     "operation": {
                         "method": "get",
                         "path": "/"
-                    }
+                    },
+                    "fixedOperationParameters": [],
+                    "reservedParameters": [],
+                    "parameters": []
                 },
                 {
                     "name": "internalWallet",
@@ -98,7 +105,9 @@
                         "method": "get",
                         "path": "/internal/wallet"
                     },
-                    "fixedOperationParameters": []
+                    "fixedOperationParameters": [],
+                    "reservedParameters": [],
+                    "parameters": []
                 }
             ]
         }
