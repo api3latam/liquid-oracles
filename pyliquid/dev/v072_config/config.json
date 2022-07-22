@@ -3,7 +3,7 @@
         {
             "authorizers": [],
             "contracts": {
-                "AirnodeRrpV0": "0xa0AD79D995DdeeB18a14eAef56A549A04e3Aa1Bd"
+                "AirnodeRrp": "0xa0AD79D995DdeeB18a14eAef56A549A04e3Aa1Bd"
             },
             "id": "4",
             "providers": {
@@ -56,7 +56,8 @@
                 "oisTitle": "pyLiquidService",
                 "endpointName": "root"
             }
-        ]
+        ],
+        "httpSignedData": []
     },
     "templates": [],
     "ois": [
