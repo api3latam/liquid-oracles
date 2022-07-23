@@ -32,4 +32,4 @@ RUN su - service && \
 
 WORKDIR $HOME/PyLiquid2EVM
 
-CMD ["python3.9 -m uvicorn ./pyliquid/main:app"]
+CMD ["python3.9 -m uvicorn pyliquid.main:app"]
