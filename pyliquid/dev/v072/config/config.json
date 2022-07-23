@@ -40,7 +40,7 @@
         },
         "logFormat": "plain",
         "logLevel": "DEBUG",
-        "stage": "dev"
+        "stage": "dev3"
     },
     "triggers": {
         "rrp": [
