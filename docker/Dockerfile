@@ -29,8 +29,8 @@ RUN add-apt-repository ppa:deadsnakes/ppa && apt-get update && \
 RUN git clone https://github.com/api3latam/PyLiquid2EVM.git && \
     cd PyLiquid2EVM && git checkout dev && \
     python3.9 -m pip install --upgrade pip && \
-    python3.9 -m pip install -r requirements.txt
-
+    python3.9 -m pip install -r requirements.txt --ignore-installed PyYAML
+    
 WORKDIR $HOME/PyLiquid2EVM
 
 EXPOSE 8000
