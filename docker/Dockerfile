@@ -31,8 +31,9 @@ RUN git clone https://github.com/api3latam/PyLiquid2EVM.git && \
     python3.9 -m pip install --upgrade pip && \
     python3.9 -m pip install -r requirements.txt --ignore-installed PyYAML
     
-WORKDIR $HOME/PyLiquid2EVM
+WORKDIR ${HOME}/PyLiquid2EVM
 
 EXPOSE 8000
 
-CMD ["python3.9 -m uvicorn pyliquid.main:app --reload"]
+#Run the PyLiquid2EVM server with uvicorn and the app.py file
+CMD ["python3.9", "-m", "uvicorn", "pyliquid.main:app", "--reload"]
