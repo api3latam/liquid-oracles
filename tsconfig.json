@@ -101,6 +101,7 @@
       "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
     },
     "files": ["hardhat.config.ts"],
-    "include": ["pyliquid/src/**/*", "pyliquid/src/index.ts", "utils/**/*", "utils/index.ts"]
+    "include": ["pyliquid/src/**/*", "pyliquid/src/index.ts", "utils/**/*", 
+              "utils/index.ts", "terraform/src/**/*, terraform/src/index.ts"]
 }
   
