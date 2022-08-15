@@ -1,5 +1,5 @@
 import { deriveEndpointId } from "@api3/airnode-admin";
-import { writeJsonFile } from "../../utils";
+import { writeJsonFile } from "../../../utils";
 
 const oisTitle = "pyLiquidService";
 const endPoints: string[] = [

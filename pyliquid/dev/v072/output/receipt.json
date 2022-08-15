@@ -9,11 +9,13 @@
     "cloudProvider": {
       "type": "aws",
       "region": "us-east-1",
-      "disableConcurrencyReservations": false
+      "disableConcurrencyReservations": true
     },
-    "stage": "dev3",
+    "stage": "dev",
     "nodeVersion": "0.7.2",
-    "timestamp": "2022-07-23T10:12:34.663Z"
+    "timestamp": "2022-07-28T14:13:19.545Z"
   },
-  "api": {}
+  "api": {
+    "httpGatewayUrl": "https://jscm2sqbsb.execute-api.us-east-1.amazonaws.com/v1"
+  }
 }

@@ -1,8 +1,13 @@
 import "@nomiclabs/hardhat-waffle";
+import "@nomiclabs/hardhat-ethers";
 import "@typechain/hardhat";
 import { config as dotenvConfig } from "dotenv";
 import { HardhatUserConfig } from "hardhat/config";
 import { resolve } from "path";
+
+require("dotenv").config();
+
+import "./tasks";
 
 dotenvConfig({path: resolve(__dirname, "./.env")});
 
@@ -12,6 +17,10 @@ const config: HardhatUserConfig = {
     hardhat: {
       accounts: {},
     },
+    rinkeby: {
+      url: process.env['RINKEBY_PROVIDER_URL'],
+      accounts: [process.env['PRIVATE_KEY'] as string]
+    }
   },
   paths: {
     artifacts: "./artifacts",

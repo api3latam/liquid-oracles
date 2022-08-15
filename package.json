@@ -21,8 +21,10 @@
   "homepage": "https://github.com/api3latam/liquid-oracles#readme",
   "dependencies": {
     "@api3/airnode-admin": "^0.7.2",
+    "@api3/airnode-protocol": "^0.7.2",
     "@cdktf/provider-aws": "^8.0.21",
     "app-root-path": "^3.0.0",
+    "axios": "^0.27.2",
     "cdktf-cli": "^0.11.2",
     "constructs": "^10.1.57"
   },

@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@api3/airnode-admin': ^0.7.2
+  '@api3/airnode-protocol': ^0.7.2
   '@cdktf/provider-aws': ^8.0.21
   '@ethersproject/abi': ^5.6.4
   '@ethersproject/bytes': ^5.6.1
@@ -12,6 +13,7 @@ specifiers:
   '@typechain/hardhat': ^6.1.2
   '@types/node': ^18.0.6
   app-root-path: ^3.0.0
+  axios: ^0.27.2
   cdktf-cli: ^0.11.2
   constructs: ^10.1.57
   dotenv: ^16.0.1
@@ -24,8 +26,10 @@ specifiers:
 
 dependencies:
   '@api3/airnode-admin': 0.7.2
+  '@api3/airnode-protocol': 0.7.2
   '@cdktf/provider-aws': 8.0.21_constructs@10.1.57
   app-root-path: 3.0.0
+  axios: 0.27.2
   cdktf-cli: 0.11.2
   constructs: 10.1.57
 
@@ -1583,6 +1587,15 @@ packages:
   /aws4/1.11.0:
     resolution: {integrity: sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==}
     dev: true
+
+  /axios/0.27.2:
+    resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
+    dependencies:
+      follow-redirects: 1.15.1_debug@4.3.4
+      form-data: 4.0.0
+    transitivePeerDependencies:
+      - debug
+    dev: false
 
   /babel-code-frame/6.26.0:
     resolution: {integrity: sha512-XqYMR2dfdGMW+hd0IUZ2PwK+fGeFkOxZJ0wY+JaQAHzt1Zx8LcvpiZD2NiGkEG8qx0CfkAOr5xt76d1e8vG90g==}
@@ -4113,7 +4126,6 @@ packages:
         optional: true
     dependencies:
       debug: 4.3.4
-    dev: true
 
   /for-each/0.3.3:
     resolution: {integrity: sha512-jqYfLp7mo9vIyQf8ykW2v7A+2N4QjeCeI5+Dz9XraiO1ign81wjiH7Fb9vSOWvQfNtmSa4H2RoQTrrXivdUZmw==}
@@ -4146,6 +4158,15 @@ packages:
       asynckit: 0.4.0
       combined-stream: 1.0.8
       mime-types: 2.1.35
+
+  /form-data/4.0.0:
+    resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==}
+    engines: {node: '>= 6'}
+    dependencies:
+      asynckit: 0.4.0
+      combined-stream: 1.0.8
+      mime-types: 2.1.35
+    dev: false
 
   /forwarded/0.2.0:
     resolution: {integrity: sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==}

@@ -16,7 +16,7 @@
                 "txType": "eip1559",
                 "fulfillmentGasLimit": 500000
             },
-            "maxConcurrency": 100
+            "maxConcurrency": 5
         }
     ],
     "nodeSettings": {
@@ -24,7 +24,7 @@
         "cloudProvider": {
             "type": "aws",
             "region": "us-east-1",
-            "disableConcurrencyReservations": false
+            "disableConcurrencyReservations": true
         },
         "airnodeWalletMnemonic": "${AIRNODE_WALLET_MNEMONIC}",
         "heartbeat": {
@@ -33,14 +33,14 @@
         "httpGateway": {
             "enabled": true,
             "apiKey": "${HTTP_GATEWAY_API_KEY}",
-            "maxConcurrency": 20
+            "maxConcurrency": 10
         },
         "httpSignedDataGateway": {
             "enabled": false
         },
         "logFormat": "plain",
         "logLevel": "DEBUG",
-        "stage": "dev3"
+        "stage": "dev"
     },
     "triggers": {
         "rrp": [
@@ -68,7 +68,7 @@
             "apiSpecifications": {
                 "servers": [
                     {
-                        "url": "http://127.0.0.1:8000"
+                        "url": "http://ec2-3-84-109-160.compute-1.amazonaws.com:80"
                     }
                 ],
                 "paths": {

@@ -33,7 +33,5 @@ RUN git clone https://github.com/api3latam/PyLiquid2EVM.git && \
     
 WORKDIR ${HOME}/PyLiquid2EVM
 
-EXPOSE 8000
-
 #Run the PyLiquid2EVM server with uvicorn and the app.py file
-CMD ["python3.9", "-m", "uvicorn", "pyliquid.main:app", "--reload"]
+CMD ["python3.9", "-m", "uvicorn", "pyliquid.main:app", "--host", "0.0.0.0", "--port", "80"]
