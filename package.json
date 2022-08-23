@@ -8,7 +8,8 @@
   ],
   "main": "index.js",
   "scripts": {
-    "generate-mnemonic": "npx @api3/airnode-admin generate-mnemonic"
+    "generate-mnemonic": "npx @api3/airnode-admin generate-mnemonic",
+    "regenerate-endpointsIds": "npx ts-node ./pyliquid/src/airnode/endpoints.ts"
   },
   "repository": {
     "type": "git",

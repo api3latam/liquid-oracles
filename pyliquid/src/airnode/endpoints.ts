@@ -4,7 +4,9 @@ import { writeJsonFile } from "../../../utils";
 const oisTitle = "pyLiquidService";
 const endPoints: string[] = [
     "root",
-    "internalWallet"
+    "internalWallet",
+    "internalWalletCreate",
+    "nodeStatus"
 ];
 
 export async function deriveEndpoints(title: string, endPointsNames: string[]) {

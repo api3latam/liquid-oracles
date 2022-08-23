@@ -6,5 +6,13 @@
   "1": {
     "name": "internalWallet",
     "address": "0x015ee78a417068069c638d6dd005170e023cbfaebac8d4e0b0b3f604b02ff1c9"
+  },
+  "2": {
+    "name": "internalWalletCreate",
+    "address": "0x5b26ca11b0bb6282df70d4f9fa392a727f76fdae1e99c6d9961594808040b9b1"
+  },
+  "3": {
+    "name": "nodeStatus",
+    "address": "0xe31b33e7dd5956b7d42f7187e502f553862bf3ae370adf8e67f8bdc2c94da45a"
   }
 }
