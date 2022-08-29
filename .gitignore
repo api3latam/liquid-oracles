@@ -107,6 +107,7 @@ dist
 # Hardhat
 cache/
 artifacts/
+types/
 
 # Configs
 *.elements.conf

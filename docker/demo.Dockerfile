@@ -17,13 +17,14 @@ RUN apt-get update && \
 
 COPY regtest.elements.conf $HOME/.elements/elements.conf
 
-RUN apt-get install -yqq make build-essential libssl-dev zlib1g-dev \
+RUN apt-get update && \
+    apt-get install -y make build-essential libssl-dev zlib1g-dev \
         libbz2-dev libreadline-dev libsqlite3-dev llvm \
         libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev \
         libffi-dev liblzma-dev python3-dev software-properties-common
 
 RUN add-apt-repository ppa:deadsnakes/ppa && apt-get update && \
-    apt-get install -yqq python3.9 python3-pip git sudo && \
+    apt-get install -y python3.9 python3-pip git sudo && \
     apt-get autoclean
 
 RUN git clone https://github.com/api3latam/PyLiquid2EVM.git && \

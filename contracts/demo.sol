@@ -9,6 +9,8 @@ contract Demo is RrpRequesterV0 {
     mapping(bytes32 => bool) public incomingFulfillments;
     mapping(bytes32 => int256) public fulfilledData;
 
+    event FulfilledRequest (bytes32 requestId);
+
     constructor (address airnodeRrpAddress) public RrpRequesterV0(airnodeRrpAddress) {}
 
     function callTheAirnode(
@@ -41,5 +43,6 @@ contract Demo is RrpRequesterV0 {
             delete incomingFulfillments[requestId];
             int256 decodedData = abi.decode(data, (int256));
             fulfilledData[requestId] = decodedData;
+            emit FulfilledRequest(requestId);
     }
 }
