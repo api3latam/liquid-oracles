@@ -12,7 +12,11 @@
     "address": "0x5b26ca11b0bb6282df70d4f9fa392a727f76fdae1e99c6d9961594808040b9b1"
   },
   "3": {
-    "name": "nodeStatus",
-    "address": "0xe31b33e7dd5956b7d42f7187e502f553862bf3ae370adf8e67f8bdc2c94da45a"
+    "name": "internalNodeStatus",
+    "address": "0x6dd8c26c9668c8ff1491514c0dda4f1f856b7365d1a2a1dc7443d7a6ee3ec603"
+  },
+  "4": {
+    "name": "internalNodeStart",
+    "address": "0x7221743eef8b4ad8f86d3511ade716b31076e4f25faff9b1172626c022116224"
   }
 }

@@ -6,7 +6,8 @@ const endPoints: string[] = [
     "root",
     "internalWallet",
     "internalWalletCreate",
-    "nodeStatus"
+    "internalNodeStatus",
+    "internalNodeStart"
 ];
 
 export async function deriveEndpoints(title: string, endPointsNames: string[]) {

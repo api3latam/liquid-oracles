@@ -1,0 +1,192 @@
+{
+    "chains": [
+        {
+            "authorizers": [],
+            "contracts": {
+                "AirnodeRrp": "0xa0AD79D995DdeeB18a14eAef56A549A04e3Aa1Bd"
+            },
+            "id": "4",
+            "providers": {
+                "rinkeby": {
+                    "url": "${RINKEBY_PROVIDER_URL}"
+                }
+            },
+            "type": "evm",
+            "options": {
+                "txType": "eip1559",
+                "fulfillmentGasLimit": 500000
+            },
+            "maxConcurrency": 5
+        }
+    ],
+    "nodeSettings": {
+        "nodeVersion": "0.7.2",
+        "cloudProvider": {
+            "type": "aws",
+            "region": "us-east-1",
+            "disableConcurrencyReservations": true
+        },
+        "airnodeWalletMnemonic": "${AIRNODE_WALLET_MNEMONIC}",
+        "heartbeat": {
+            "enabled": false
+        },
+        "httpGateway": {
+            "enabled": true,
+            "apiKey": "${HTTP_GATEWAY_API_KEY}",
+            "maxConcurrency": 10
+        },
+        "httpSignedDataGateway": {
+            "enabled": false
+        },
+        "logFormat": "plain",
+        "logLevel": "DEBUG",
+        "stage": "demo"
+    },
+    "triggers": {
+        "rrp": [
+            {
+                "endpointId": "0x015ee78a417068069c638d6dd005170e023cbfaebac8d4e0b0b3f604b02ff1c9",
+                "oisTitle": "pyLiquidService",
+                "endpointName": "internalWallet"
+            },
+            {
+                "endpointId": "0x5b26ca11b0bb6282df70d4f9fa392a727f76fdae1e99c6d9961594808040b9b1",
+                "oisTitle": "pyLiquidService",
+                "endpointName": "internalWalletCreate"
+            },
+            {
+                "endpointId": "0x6dd8c26c9668c8ff1491514c0dda4f1f856b7365d1a2a1dc7443d7a6ee3ec603",
+                "oisTitle": "pyLiquidService",
+                "endpointName": "internalNodeStatus"
+            },
+            {
+                "endpointId": "0x7221743eef8b4ad8f86d3511ade716b31076e4f25faff9b1172626c022116224",
+                "oisTitle": "pyLiquidService",
+                "endpointName": "internalNodeStart"
+            }
+        ],
+        "http": [
+            {
+                "endpointId": "0xc4235409221ee44ab4cfee9d170e4d21db2e54f4fdfe5a6c71659c64c3250ad6",
+                "oisTitle": "pyLiquidService",
+                "endpointName": "root"
+            }
+        ],
+        "httpSignedData": []
+    },
+    "templates": [],
+    "ois": [
+        {
+            "oisFormat": "1.0.0",
+            "title": "pyLiquidService",
+            "version": "1.0.0",
+            "apiSpecifications": {
+                "servers": [
+                    {
+                        "url": "http://107.23.85.218:80"
+                    }
+                ],
+                "paths": {
+                    "/" : {
+                        "get": {
+                            "parameters": []
+                        }
+        
+                    },
+                    "/internal/wallet" : {
+                        "get": {   
+                            "parameters": []
+                        }
+                    },
+                    "/internal/wallet/create": {
+                        "post": {
+                            "parameters": []
+                        }
+                    },
+                    "/internal/node/status": {
+                        "get": {
+                            "parameters": []
+                        }
+                    },
+                    "/internal/node/start": {
+                        "post": {
+                            "parameters": [
+                                {
+                                    "name": "body",
+                                    "in": "query"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "components": {
+                    "securitySchemes": {}
+                },
+                "security": {}
+            },
+            "endpoints": [
+                {
+                    "name":"root",
+                    "operation": {
+                        "method": "get",
+                        "path": "/"
+                    },
+                    "fixedOperationParameters": [],
+                    "reservedParameters": [],
+                    "parameters": []
+                },
+                {
+                    "name": "internalWallet",
+                    "operation": {
+                        "method": "get",
+                        "path": "/internal/wallet"
+                    },
+                    "fixedOperationParameters": [],
+                    "reservedParameters": [],
+                    "parameters": []
+                },
+                {
+                    "name": "internalWalletCreate",
+                    "operation": {
+                        "method": "post",
+                        "path": "/internal/wallet/create"
+                    },
+                    "fixedOperationParameters": [],
+                    "reservedParameters": [],
+                    "parameters": []
+                },
+                {
+                    "name": "internalNodeStatus",
+                    "operation": {
+                        "method": "get",
+                        "path": "/internal/node/status"
+                    },
+                    "fixedOperationParameters": [],
+                    "reservedParameters": [],
+                    "parameters": []
+                },
+                {
+                    "name": "internalNodeStart",
+                    "operation": {
+                        "method": "post",
+                        "path": "/internal/node/start"
+                    },
+                    "fixedOperationParameters": [],
+                    "reservedParameters": [],
+                    "parameters": [
+                        {
+                            "name": "body",
+                            "default": "",
+                            "operationParameter": {
+                                "name": "body",
+                                "in": "query"
+                            },
+                            "required": true
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "apiCredentials": []
+}
