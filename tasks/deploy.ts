@@ -16,4 +16,4 @@ task("deploy", "Deploy Compile Contracts for Repository")
                 console.error(e);
             }
         }
-    )
+    );
