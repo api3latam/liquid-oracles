@@ -20,10 +20,15 @@ contract Demo is RrpRequesterV0, ERC20, Ownable {
     mapping(uint8 => Endpoint) public endpointsIds;
     address private sponsorWallet;
 
-    event FulfilledRequest (bytes32 requestId);
+    event FulfilledRequest (bytes32 indexed requestId);
     event SetRequestParameters(
         address airnodeAddress,
         address sponsorAddress
+    );
+    event SetEndpoint(
+        uint8 _index,
+        bytes32 _newEndpointId,
+        bytes4 _newEndpointSelector
     );
 
     constructor (
@@ -42,9 +47,8 @@ contract Demo is RrpRequesterV0, ERC20, Ownable {
     )
         {}
 
-    function setRequestParameters(
+    function setRequestParameters (
         address _airnode,
-        bytes32 _endpointIdUint256,
         address _sponsorWallet
     ) external onlyOwner {
         airnode = _airnode;
@@ -55,13 +59,33 @@ contract Demo is RrpRequesterV0, ERC20, Ownable {
         );
     }
 
+    /**
+     * @dev Pending to add `Update Endpoint Logic`
+     */
+    function setEndpointLogic (
+        bytes32 _endpointId,
+        bytes4 _functionSelector
+    ) external onlyOwner {
+        Endpoint memory newEndpoint;
+
+        newEndpoint.endpointId = _endpointId;
+        newEndpoint.functionSelector = _functionSelector;
+
+        endpointsIds.push(newEndpoint);
+
+        emit SetEndpoint(
+            endpointsId.length, 
+            _endpointId, 
+            _functionSelector);
+    }
+
     function callTheAirnode (
         address airnode,
         uint8 endpointId,
         address sponsor,
         address sponsorWallet,
         bytes calldata parameters
-        ) external {
+        ) external onlyOwner {
             Endpoint memory functionData = endpointsIds[endpointId];
 
             bytes32 requestId = airnodeRrp.makeFullRequest (
