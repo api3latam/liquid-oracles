@@ -11,8 +11,13 @@ contract Demo is RrpRequesterV0, ERC20, Ownable {
     mapping(bytes32 => bool) public incomingFulfillments;
     mapping(bytes32 => bytes32) public fulfilledData;
 
+    struct Endpoint {
+        bytes32 endpointId;
+        bytes4 functionSelector;
+    }
+
     address public airnode;
-    mapping(uint8 => bytes32) public endpointIdsUints256;
+    mapping(uint8 => Endpoint) public endpointsIds;
     address private sponsorWallet;
 
     event FulfilledRequest (bytes32 requestId);
@@ -57,14 +62,15 @@ contract Demo is RrpRequesterV0, ERC20, Ownable {
         address sponsorWallet,
         bytes calldata parameters
         ) external {
+            Endpoint memory functionData = endpointsIds[endpointId];
 
             bytes32 requestId = airnodeRrp.makeFullRequest (
                 airnode,                            // airnode
-                endpointIdsUints256[endpointId],    // endpointId
+                functionData.endpointId,            // endpointId
                 sponsor,                            // sponsor's address
                 sponsorWallet,                      // sponsorWallet
                 address(this),                      // fulfillAddress
-                this.airnodeCallback.selector,      // fulfillFunctionId
+                functionData.functionSelector,      // fulfillFunctionId
                 parameters                          // API parameters
             );
 
