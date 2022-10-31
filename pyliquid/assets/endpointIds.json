@@ -1,22 +1,18 @@
 {
   "0": {
     "name": "root",
-    "address": "0xc4235409221ee44ab4cfee9d170e4d21db2e54f4fdfe5a6c71659c64c3250ad6"
+    "address": "0xff9293cbba4c3f0e498e78e6be42d744aceccd297fd8f73f711651c89c65c3a8"
   },
   "1": {
-    "name": "internalWallet",
-    "address": "0x015ee78a417068069c638d6dd005170e023cbfaebac8d4e0b0b3f604b02ff1c9"
+    "name": "opsWallet",
+    "address": "0x4195740ad5fa687ffeaecb3cc59ac7dc7c65bb04d2f3a894bc359c02d568f895"
   },
   "2": {
-    "name": "internalWalletCreate",
-    "address": "0x5b26ca11b0bb6282df70d4f9fa392a727f76fdae1e99c6d9961594808040b9b1"
+    "name": "opsWalletLabel",
+    "address": "0x98a01d0deb01d27031447ffb57038a63d54535683955c319e461641027963aa7"
   },
   "3": {
-    "name": "internalNodeStatus",
-    "address": "0x6dd8c26c9668c8ff1491514c0dda4f1f856b7365d1a2a1dc7443d7a6ee3ec603"
-  },
-  "4": {
-    "name": "internalNodeStart",
-    "address": "0x7221743eef8b4ad8f86d3511ade716b31076e4f25faff9b1172626c022116224"
+    "name": "txSend",
+    "address": "0x380f4282612dd5f0701630763c5ce7baff30e4a414781f6c715d8bc77196b11d"
   }
 }

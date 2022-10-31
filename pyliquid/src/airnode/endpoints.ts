@@ -1,13 +1,12 @@
 import { deriveEndpointId } from "@api3/airnode-admin";
 import { writeJsonFile } from "../../../utils";
 
-const oisTitle = "pyLiquidService";
+const oisTitle = "pyLiquid";
 const endPoints: string[] = [
     "root",
-    "internalWallet",
-    "internalWalletCreate",
-    "internalNodeStatus",
-    "internalNodeStart"
+    "opsWallet",
+    "opsWalletLabel",
+    "txSend"
 ];
 
 export async function deriveEndpoints(title: string, endPointsNames: string[]) {
