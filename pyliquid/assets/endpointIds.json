@@ -12,7 +12,7 @@
     "address": "0x98a01d0deb01d27031447ffb57038a63d54535683955c319e461641027963aa7"
   },
   "3": {
-    "name": "txSend",
-    "address": "0x380f4282612dd5f0701630763c5ce7baff30e4a414781f6c715d8bc77196b11d"
+    "name": "opsTxSend",
+    "address": "0xa4b094fe12fad8cce7bf0c77f28b212b26bd0d68f01b290e96ab91b542ff79a2"
   }
 }

@@ -6,7 +6,7 @@ const endPoints: string[] = [
     "root",
     "opsWallet",
     "opsWalletLabel",
-    "txSend"
+    "opsTxSend"
 ];
 
 export async function deriveEndpoints(title: string, endPointsNames: string[]) {

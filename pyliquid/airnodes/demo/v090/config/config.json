@@ -1,0 +1,230 @@
+{
+    "chains": [
+        {
+            "authorizers": [],
+            "contracts": {
+                "AirnodeRrp": "0xa0AD79D995DdeeB18a14eAef56A549A04e3Aa1Bd"
+            },
+            "id": "5",
+            "providers": {
+                "goerli": {
+                    "url": "${GOERLI_PROVIDER_URL}"
+                }
+            },
+            "type": "evm",
+            "options": {
+                "txType": "eip1559",
+                "fulfillmentGasLimit": 500000
+            },
+            "maxConcurrency": 5
+        }
+    ],
+    "nodeSettings": {
+        "nodeVersion": "0.9.0",
+        "cloudProvider": {
+            "type": "aws",
+            "region": "us-east-1",
+            "disableConcurrencyReservations": false
+        },
+        "airnodeWalletMnemonic": "${AIRNODE_WALLET_MNEMONIC}",
+        "heartbeat": {
+            "enabled": false
+        },
+        "httpGateway": {
+            "enabled": true,
+            "apiKey": "${HTTP_GATEWAY_API_KEY}",
+            "maxConcurrency": 10
+        },
+        "httpSignedDataGateway": {
+            "enabled": false
+        },
+        "logFormat": "plain",
+        "logLevel": "DEBUG",
+        "stage": "demo"
+    },
+    "triggers": {
+        "rrp": [
+            {
+                "endpointId": "0x4195740ad5fa687ffeaecb3cc59ac7dc7c65bb04d2f3a894bc359c02d568f895",
+                "oisTitle": "pyLiquid",
+                "endpointName": "opsWallet"
+            },
+            {
+                "endpointId": "0x98a01d0deb01d27031447ffb57038a63d54535683955c319e461641027963aa7",
+                "oisTitle": "pyLiquid",
+                "endpointName": "opsWalletLabel"
+            },
+            {
+                "endpointId": "0xa4b094fe12fad8cce7bf0c77f28b212b26bd0d68f01b290e96ab91b542ff79a2",
+                "oisTitle": "pyLiquid",
+                "endpointName": "opsTxSend"
+            }
+        ],
+        "http": [
+            {
+                "endpointId": "0xff9293cbba4c3f0e498e78e6be42d744aceccd297fd8f73f711651c89c65c3a8",
+                "oisTitle": "pyLiquid",
+                "endpointName": "root"
+            }
+        ],
+        "httpSignedData": []
+    },
+    "templates": [],
+    "ois": [
+        {
+            "oisFormat": "1.2.0",
+            "title": "pyLiquid",
+            "version": "1.0.0",
+            "apiSpecifications": {
+                "servers": [
+                    {
+                        "url": "http://107.20.114.237:80"
+                    }
+                ],
+                "paths": {
+                    "/" : {
+                        "get": {
+                            "parameters": []
+                        }
+        
+                    },
+                    "/operations/wallet" : {
+                        "get": {   
+                            "parameters": []
+                        }
+                    },
+                    "/operations/wallet/{wallet_label}": {
+                        "get": {
+                            "parameters": [
+                                {
+                                    "in": "path",
+                                    "name": "wallet_label"
+                                }
+                            ]
+                        }
+                    },
+                    "/operations/tx/send": {
+                        "post": {
+                            "parameters": [
+                                {
+                                    "name": "incoming_body",
+                                    "in": "query"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "components": {
+                    "securitySchemes": {}
+                },
+                "security": {}
+            },
+            "endpoints": [
+                {
+                    "name":"root",
+                    "operation": {
+                        "method": "get",
+                        "path": "/"
+                    },
+                    "fixedOperationParameters": [],
+                    "reservedParameters": [
+                        {
+                            "name": "_type",
+                            "fixed": "string"
+                        },
+                        {
+                            "name": "_path",
+                            "fixed": "message"
+                        }
+                    ],
+                    "parameters": [],
+                    "summary": "Returns `hello` message"
+                },
+                {
+                    "name": "opsWallet",
+                    "operation": {
+                        "method": "get",
+                        "path": "/operations/wallet"
+                    },
+                    "fixedOperationParameters": [],
+                    "reservedParameters": [
+                        {
+                            "name": "_type",
+                            "fixed": "string"
+                        },
+                        {
+                            "name": "_path",
+                            "fixed": "payload"
+                        }
+                    ],
+                    "parameters": [],
+                    "summary": "List node wallet directory",
+                    "description": "Returns a list of all the available wallets from the node in the instance"
+                },
+                {
+                    "name": "opsWalletLabel",
+                    "operation": {
+                        "method": "get",
+                        "path": "/operations/wallet/{wallet_label}"
+                    },
+                    "fixedOperationParameters": [],
+                    "reservedParameters": [
+                        {
+                            "name": "_type",
+                            "fixed": "string"
+                        },
+                        {
+                            "name": "_path",
+                            "fixed": "payload"
+                        }
+                    ],
+                    "parameters": [
+                        {
+                            "name": "wallet_label",
+                            "operationParameter": {
+                                "name": "wallet_label",
+                                "in": "path"
+                            },
+                            "required": true,
+                            "description": "The name given to the wallet at creation time",
+                            "example": "test_wallet"
+                        }
+                    ],
+                    "summary": "Returns metadata for a given wallet"
+                },
+                {
+                    "name": "opsTxSend",
+                    "operation": {
+                        "method": "post",
+                        "path": "/operations/tx/send"
+                    },
+                    "fixedOperationParameters": [],
+                    "reservedParameters": [
+                        {
+                            "name": "_type",
+                            "fixed": "string"
+                        }, 
+                        {
+                            "name": "_path",
+                            "fixed": "payload"
+                        }
+                    ],
+                    "parameters": [
+                        {
+                            "name": "incoming_body",
+                            "operationParameter": {
+                                "name": "incoming_body",
+                                "in": "query"
+                            },
+                            "required": true,
+                            "description": "Object including the `target_address` and the `amount` for the operation",
+                            "example": "{'target_address': 'tex1qs9rrvf8md...', 'amount': '0.005'}"
+                        }
+                    ],
+                    "summary": "Sends tL-BTC to a given address"
+                }
+            ]
+        }
+    ],
+    "apiCredentials": []
+}
