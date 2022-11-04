@@ -1,20 +1,37 @@
 {
     "chains": [
         {
-            "authorizers": [],
+            "authorizers": {
+                "requesterEndpointAuthorizers": []
+            },
+            "authorizations": {
+                "requesterEndpointAuthorizations": {}
+            },
             "contracts": {
                 "AirnodeRrp": "0xa0AD79D995DdeeB18a14eAef56A549A04e3Aa1Bd"
             },
             "id": "5",
             "providers": {
                 "goerli": {
-                    "url": "${GOERLI_PROVIDER_URL}"
+                    "url": "${CHAIN_PROVIDER_URL}"
                 }
             },
             "type": "evm",
             "options": {
-                "txType": "eip1559",
-                "fulfillmentGasLimit": 500000
+                "fulfillmentGasLimit": 500000,
+                "gasPriceOracle": [
+                    {
+                        "gasPriceStrategy": "providerRecommendedGasPrice",
+                        "recommendedGasPriceMultiplier": 1.2
+                    },
+                    {
+                        "gasPriceStrategy": "constantGasPrice",
+                        "gasPrice": {
+                            "value": 30,
+                            "unit": "gwei"
+                            }
+                    }
+                ]
             },
             "maxConcurrency": 5
         }
@@ -24,7 +41,7 @@
         "cloudProvider": {
             "type": "aws",
             "region": "us-east-1",
-            "disableConcurrencyReservations": false
+            "disableConcurrencyReservations": true
         },
         "airnodeWalletMnemonic": "${AIRNODE_WALLET_MNEMONIC}",
         "heartbeat": {
@@ -33,7 +50,8 @@
         "httpGateway": {
             "enabled": true,
             "apiKey": "${HTTP_GATEWAY_API_KEY}",
-            "maxConcurrency": 10
+            "maxConcurrency": 1, 
+            "corsOrigins": []
         },
         "httpSignedDataGateway": {
             "enabled": false
@@ -47,17 +65,20 @@
             {
                 "endpointId": "0x4195740ad5fa687ffeaecb3cc59ac7dc7c65bb04d2f3a894bc359c02d568f895",
                 "oisTitle": "pyLiquid",
-                "endpointName": "opsWallet"
+                "endpointName": "opsWallet",
+                "cacheResponses": false
             },
             {
                 "endpointId": "0x98a01d0deb01d27031447ffb57038a63d54535683955c319e461641027963aa7",
                 "oisTitle": "pyLiquid",
-                "endpointName": "opsWalletLabel"
+                "endpointName": "opsWalletLabel",
+                "cacheResponses": false
             },
             {
                 "endpointId": "0xa4b094fe12fad8cce7bf0c77f28b212b26bd0d68f01b290e96ab91b542ff79a2",
                 "oisTitle": "pyLiquid",
-                "endpointName": "opsTxSend"
+                "endpointName": "opsTxSend",
+                "cacheResponses": true
             }
         ],
         "http": [

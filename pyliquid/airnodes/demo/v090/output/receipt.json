@@ -1,0 +1,18 @@
+{
+  "airnodeWallet": {
+    "airnodeAddress": "0x70Ee25d5Db5fF3B64b76FBeC90f35a120660bB73",
+    "airnodeAddressShort": "70ee25d",
+    "airnodeXpub": "xpub6CGThmUudyPFLF7qJewZxoH4h1Dvjn6Ec64WQwxSkcTce3rVsNNVMZs8ZtCWkbDD7X9jy1YUYVanpS92ni1fiNi9f8qaSRf5kkUG5g5Di38"
+  },
+  "deployment": {
+    "cloudProvider": {
+      "type": "aws",
+      "region": "us-east-1",
+      "disableConcurrencyReservations": true
+    },
+    "stage": "demo",
+    "nodeVersion": "0.9.0",
+    "timestamp": "2022-11-04T18:07:19.406Z"
+  },
+  "success": true
+}
