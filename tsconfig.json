@@ -102,6 +102,7 @@
     },
     "files": ["hardhat.config.ts"],
     "include": ["pyliquid/src/**/*", "pyliquid/src/index.ts", "utils/**/*", 
-              "utils/index.ts", "terraform/src/**/*, terraform/src/index.ts"]
+              "utils/index.ts", "terraform/src/**/*, terraform/src/index.ts",
+              "./tests", "./typechain", "./tasks"]
 }
   
