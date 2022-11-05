@@ -18,14 +18,16 @@ contract Demo is RrpRequesterV0, ERC20, Ownable {
     }
 
     struct Operation {
-        address senderAddress,
-        address recieverAdress,
-        bytes payload
+        address senderAddress;
+        address recieverAdress;
+        uint256 amount;
+        bytes payload;
     }
 
     struct TokenEscrow {
         bool liquidMint;
         bool evmConfirmation;
+        uint256 escrowIndex;
         bytes32 requestId;
         address sender;
         address reciever;
@@ -38,7 +40,7 @@ contract Demo is RrpRequesterV0, ERC20, Ownable {
     mapping(uint256 => TokenEscrow) public transactionHistory;
     mapping(address => TokenEscrow[]) public currentTransactions;
 
-    event SuccessfulGet (
+    event SuccessfulRequest (
         bytes32 indexed requestId, 
         bytes apiResult
     );
@@ -60,7 +62,11 @@ contract Demo is RrpRequesterV0, ERC20, Ownable {
         address indexed senderAddress,
         address indexed recieverAddress,
         bytes payload
-    )
+    );
+    event FulfilledEscrow (
+        address indexed recieverAddress,
+        bytes32 indexed requestId
+    );
 
     constructor (
         address _airnodeRrpAddress,
@@ -131,14 +137,16 @@ contract Demo is RrpRequesterV0, ERC20, Ownable {
             requestToOperation[requestId] = Operation (
                 _senderAddress, 
                 address(0),
+                0,
                 parameters);
             emit WalletOperation(_senderAddress, parameters);
     }
 
     function operationsTx (
         uint8 endpointIndex,
-        address senderAddress,
-        address recieverAddress,
+        address _senderAddress,
+        address _recieverAddress,
+        uint256 _amount,
         bytes calldata parameters
     ) external onlyOwner {
         Endpoint memory functionData = endpointsIds[endpointIndex];
@@ -155,10 +163,11 @@ contract Demo is RrpRequesterV0, ERC20, Ownable {
 
         incomingFulfillments[requestId] = true;
         requestToOperation[requestId] = Operation (
-            senderAddress, 
-            address(0),
+            _senderAddress, 
+            _recieverAddress,
+            _amount,
             parameters);
-        emit TxOperation()
+        emit TxOperation(_senderAddress, _recieverAddress, parameters);
     }
 
     function walletGet (
@@ -170,7 +179,7 @@ contract Demo is RrpRequesterV0, ERC20, Ownable {
         string memory decodedData = abi.decode(data, (string));
         delete incomingFulfillments[requestId];
 
-        emit SuccessfulGet(requestId, decodedData);
+        emit SuccessfulRequest(requestId, decodedData);
 
     }
 
@@ -183,10 +192,10 @@ contract Demo is RrpRequesterV0, ERC20, Ownable {
         string memory decodedData = abi.decode(data, (string));
         delete incomingFulfillments[requestId];
 
-        emit SuccessfulGet(requestId, decodedData);
+        emit SuccessfulRequest(requestId, decodedData);
     }
 
-    function txSend (
+    function txSendPost (
         bytes32 requestId,
         bytes calldata data 
         ) external onlyAirnodeRrp {
@@ -195,11 +204,49 @@ contract Demo is RrpRequesterV0, ERC20, Ownable {
             
             string memory decodedData = abi.decode(data, (string));
             fulfilledData[requestId] = decodedData;
-            TokenEscrow memory currentToken = TokenEscrow(
 
-            ); 
+            Operation memory currentOperation = requestToOperation[requestId];
+            TokenEscrow memory currentToken = TokenEscrow (
+                true,
+                false,
+                currentTransactions[currentOperation.recieverAdress].length,
+                currentOperation.senderAddress,
+                currentOperation.recieverAdress,
+                currentOperation.amount
+            );
+
+            _mint(address(this), currentOperation.amount);
 
             delete incomingFulfillments[requestId];
-            emit FulfilledRequest(requestId);
+            transactionHistory[transactionHistory.length] = currentToken;
+            currentTransactions[currentOperation.recieverAddress] = currentToken;
+
+            emit SuccessfulRequest(requestId);
+    }
+
+    function fulfillTransfer (
+        bytes32 requestId,
+        address poolAddress
+    ) external {
+        TokenEscrow memory rawToken = transactionHistory[requestId];
+        require(rawToken.sender == msg.sender, 
+            "You're not the owner of this Escrow");
+        require(rawToken.evmConfirmation == false,
+            "This Escrow has already been finished");
+
+        uint256 mapIndex = recieverToken.escrowIndex;
+        TokenEscrow memory addressToken = currentTransactions[msg.sender][mapIndex];
+
+        require (rawToken == addressToken, 
+            "The Escrow does not match with the given `requestId`");
+        require (balanceOf(address(this)) >= addressToken.amount, 
+            "There are not enough funds available");
+
+        _transfer(address(this), msg.sender, amount);
+
+        transactionHistory[request].evmConfirmation = true;
+        delete currentTransactions[msg.sender][mapIndex];
+
+        emit FulfilledEscrow(msg.sender, requestId);
     }
 }
