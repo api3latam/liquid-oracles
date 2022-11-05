@@ -8,6 +8,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Demo is RrpRequesterV0, ERC20, Ownable {
 
+    uint8 private tokenDecimals;
     address public airnode;
     address private sponsorAddress;
     address private sponsorWallet;
@@ -28,21 +29,21 @@ contract Demo is RrpRequesterV0, ERC20, Ownable {
         bool liquidMint;
         bool evmConfirmation;
         uint256 escrowIndex;
-        bytes32 requestId;
         address sender;
         address reciever;
         uint256 amount;
     }
 
-    mapping(uint8 => Endpoint) public endpointsIds;
+    Endpoint[] public endpointsIds;
+
     mapping(bytes32 => bool) public incomingFulfillments;
     mapping(bytes32 => Operation) private requestToOperation;
-    mapping(uint256 => TokenEscrow) public transactionHistory;
+    mapping(bytes32 => TokenEscrow) public transactionHistory;
     mapping(address => TokenEscrow[]) public currentTransactions;
 
     event SuccessfulRequest (
         bytes32 indexed requestId, 
-        bytes apiResult
+        string apiResult
     );
     event SetRequestParameters (
         address airnodeAddress,
@@ -50,7 +51,7 @@ contract Demo is RrpRequesterV0, ERC20, Ownable {
         address sponsorWallet
     );
     event SetEndpoint (
-        uint8 _index,
+        uint256 _index,
         bytes32 _newEndpointId,
         bytes4 _newEndpointSelector
     );
@@ -72,17 +73,22 @@ contract Demo is RrpRequesterV0, ERC20, Ownable {
         address _airnodeRrpAddress,
         string memory _tokenName,
         string memory _tokenSymbol,
-        uint8 _decimals
+        uint8 _tokenDecimals
         )
     RrpRequesterV0 (
         _airnodeRrpAddress
     )
     ERC20 (
         _tokenName,
-        _tokenSymbol,
-        _decimals
+        _tokenSymbol
     )
-        {}
+        {
+            tokenDecimals = _tokenDecimals; 
+        }
+
+    function decimals () public view virtual override returns (uint8) {
+        return tokenDecimals;
+    }
 
     function setRequestParameters (
         address _airnode,
@@ -111,7 +117,7 @@ contract Demo is RrpRequesterV0, ERC20, Ownable {
         endpointsIds.push(newEndpoint);
 
         emit SetEndpoint(
-            endpointsId.length, 
+            endpointsIds.length, 
             _endpointId, 
             _functionSelector);
     }
@@ -203,7 +209,6 @@ contract Demo is RrpRequesterV0, ERC20, Ownable {
             require(incomingFulfillments[requestId], "No such request made");
             
             string memory decodedData = abi.decode(data, (string));
-            fulfilledData[requestId] = decodedData;
 
             Operation memory currentOperation = requestToOperation[requestId];
             TokenEscrow memory currentToken = TokenEscrow (
@@ -218,15 +223,14 @@ contract Demo is RrpRequesterV0, ERC20, Ownable {
             _mint(address(this), currentOperation.amount);
 
             delete incomingFulfillments[requestId];
-            transactionHistory[transactionHistory.length] = currentToken;
-            currentTransactions[currentOperation.recieverAddress] = currentToken;
+            transactionHistory[requestId] = currentToken;
+            currentTransactions[currentOperation.recieverAdress].push(currentToken);
 
-            emit SuccessfulRequest(requestId);
+            emit SuccessfulRequest(requestId, decodedData);
     }
 
     function fulfillTransfer (
-        bytes32 requestId,
-        address poolAddress
+        bytes32 requestId
     ) external {
         TokenEscrow memory rawToken = transactionHistory[requestId];
         require(rawToken.sender == msg.sender, 
@@ -234,19 +238,37 @@ contract Demo is RrpRequesterV0, ERC20, Ownable {
         require(rawToken.evmConfirmation == false,
             "This Escrow has already been finished");
 
-        uint256 mapIndex = recieverToken.escrowIndex;
+        uint256 mapIndex = rawToken.escrowIndex;
         TokenEscrow memory addressToken = currentTransactions[msg.sender][mapIndex];
 
-        require (rawToken == addressToken, 
+        require (checkEscrowEquality(rawToken, addressToken),
             "The Escrow does not match with the given `requestId`");
         require (balanceOf(address(this)) >= addressToken.amount, 
             "There are not enough funds available");
 
-        _transfer(address(this), msg.sender, amount);
+        _transfer(address(this), msg.sender, addressToken.amount);
 
-        transactionHistory[request].evmConfirmation = true;
+        transactionHistory[requestId].evmConfirmation = true;
         delete currentTransactions[msg.sender][mapIndex];
 
         emit FulfilledEscrow(msg.sender, requestId);
+    }
+
+    function checkEscrowEquality (
+        TokenEscrow memory _history,
+        TokenEscrow memory _sender
+    ) private pure returns (bool) {
+        bool result = true;
+
+        if (_history.liquidMint != _sender.liquidMint
+            || _history.evmConfirmation != _sender.evmConfirmation
+            || _history.escrowIndex != _sender.escrowIndex
+            || _history.sender != _sender.sender
+            || _history.reciever != _sender.reciever
+            || _history.amount != _sender.amount) {
+                result = false;
+        }
+
+        return result;
     }
 }
