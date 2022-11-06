@@ -83,8 +83,25 @@ contract Demo is RrpRequesterV0, ERC20, Ownable {
         _tokenSymbol
     )
         {
-            tokenDecimals = _tokenDecimals; 
+            tokenDecimals = _tokenDecimals;
         }
+
+    function _setEndpointReference (
+        bytes32 _endpointId,
+        bytes4 _functionSelector
+    ) external onlyOwner {
+        Endpoint memory newEndpoint;
+
+        newEndpoint.endpointId = _endpointId;
+        newEndpoint.functionSelector = _functionSelector;
+
+        endpointsIds.push(newEndpoint);
+
+        emit SetEndpoint(
+            endpointsIds.length, 
+            _endpointId, 
+            _functionSelector);
+    }
 
     function decimals () public view virtual override returns (uint8) {
         return tokenDecimals;
@@ -103,23 +120,6 @@ contract Demo is RrpRequesterV0, ERC20, Ownable {
             _sponsorAddress,
             _sponsorWallet
         );
-    }
-
-    function _setEndpointReference (
-        bytes32 _endpointId,
-        bytes4 _functionSelector
-    ) private {
-        Endpoint memory newEndpoint;
-
-        newEndpoint.endpointId = _endpointId;
-        newEndpoint.functionSelector = _functionSelector;
-
-        endpointsIds.push(newEndpoint);
-
-        emit SetEndpoint(
-            endpointsIds.length, 
-            _endpointId, 
-            _functionSelector);
     }
 
     function operationsWallet (
