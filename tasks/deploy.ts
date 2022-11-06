@@ -1,18 +1,18 @@
-import { providers, Wallet } from "ethers";
 import { AirnodeRrpAddresses } from '@api3/airnode-protocol';
 import { task } from "hardhat/config";
 
-import { getEnvVars, writeJsonFile } from "../utils"
+import { getEnvVars,
+    writeJsonFile } from "../utils";
 
 task("deploy", "Deploy Compile Contracts for Repository")
     .setAction(async (_, hre) => {
             const file = `addresses/demo${hre.network.name}.json`;
-            const provider = new providers.JsonRpcProvider (
+            const provider = new hre.ethers.providers.JsonRpcProvider (
                 getEnvVars (
                     `${(hre.network.name).toUpperCase()}_RPC`)
                     [0]
                 );
-            const wallet = new Wallet(getEnvVars("PRIVATE_KEY")[0], provider);
+            const wallet = new hre.ethers.Wallet(getEnvVars("PRIVATE_KEY")[0], provider);
 
             const factory = await hre.ethers.getContractFactory("Demo", wallet);
 
