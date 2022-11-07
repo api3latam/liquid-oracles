@@ -8,7 +8,7 @@ import { task } from "hardhat/config";
 import { getEnvVars,
     loadJsonFile } from "../utils";
 
-task("deploy", "Deploy Compile Contracts for Repository")
+task("fund", "Fund sponsor wallet for airnode")
     .setAction(async (_, hre) => {
             const demoAirnode = loadJsonFile('pyliquid/airnodes/demo/v090/output/receipt.json')
                 ['airnodeWallet'];
@@ -29,7 +29,7 @@ task("deploy", "Deploy Compile Contracts for Repository")
                     wallet.address
                 );
 
-                const value = hre.ethers.utils.parseEther("0.1");
+                const value = "0.1";
                 const unit = "ETH";
 
                 console.log(

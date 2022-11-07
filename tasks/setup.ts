@@ -4,7 +4,7 @@ import { getEnvVars,
     loadJsonFile } from "../utils";
 import type { Demo } from "../types/contracts/demo.sol/Demo";
 
-task("deploy", "Deploy Compile Contracts for Repository")
+task("setup", "Setup any parameter or functionalities for deployed contracts")
     .setAction(async (_, hre) => {
             const demoAirnode = loadJsonFile('pyliquid/airnodes/demo/v090/output/receipt.json')
                 ['airnodeWallet'];
@@ -27,32 +27,43 @@ task("deploy", "Deploy Compile Contracts for Repository")
 
             try {
                 console.log('Setting up Demo Contract\n');
+                console.log("Setup Request Parameters\n");
                 await contract.setRequestParameters(
                     demoAirnode['airnodeAddress'],
                     wallet.address,
                     sponsor
                 );
-
+                
+                console.log("Setting-up callback endpoints\n");
                 Object.keys(airnodeEndpoints).forEach(async (index: string) => {
+                    console.log(`Endpoint: ${airnodeEndpoints[index].name}\
+                        Address: ${airnodeEndpoints[index].address}\n`);
                     if (airnodeEndpoints[index].name === "opsWallet") {
+                        const selector = 
+                            await contract._getSelector("walletGet(bytes32,bytes)");
                         await contract._setEndpointReference (
                             airnodeEndpoints[index].address,
-                            "walletGet(bytes32,bytes)"
+                            selector
                         );
                     }
                     if (airnodeEndpoints[index].name === "opsWalletLabel") {
+                        const selector = 
+                            await contract._getSelector("walletLabelGet(bytes32,bytes)");
                         await contract._setEndpointReference (
                             airnodeEndpoints[index].address,
-                            "walletLabelGet(bytes32,bytes)"
+                            selector
                         );
-                    }
+                    };
                     if (airnodeEndpoints[index].name === "opsTxSend") {
+                        const selector = 
+                            await contract._getSelector("txSendPost(bytes32,bytes)");
                         await contract._setEndpointReference (
                             airnodeEndpoints[index].address,
-                            "txSendPost(bytes32,bytes)"
-                        )
-                    }
-                })
+                            selector
+                        );
+                    };
+                });
+                console.log("Done with setup\n")
             } catch (e) {
                 console.error(e);
             }
