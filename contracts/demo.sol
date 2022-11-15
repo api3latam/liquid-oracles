@@ -87,20 +87,32 @@ contract Demo is RrpRequesterV0, ERC20, Ownable {
         }
 
     function _setEndpointReference (
-        bytes32 _endpointId,
-        bytes4 _functionSelector
+        bytes32 _endpointId
     ) external onlyOwner {
         Endpoint memory newEndpoint;
 
         newEndpoint.endpointId = _endpointId;
-        newEndpoint.functionSelector = _functionSelector;
+        if (_endpointId == 0x4195740ad5fa687ffeaecb3cc59ac7dc7c65bb04d2f3a894bc359c02d568f895) {
+            newEndpoint.functionSelector = this.walletGet.selector;
+        }
+
+        if (_endpointId == 0x98a01d0deb01d27031447ffb57038a63d54535683955c319e461641027963aa7) {
+            newEndpoint.functionSelector = this.walletLabelGet.selector;
+        }
+
+        if (_endpointId == 0xa4b094fe12fad8cce7bf0c77f28b212b26bd0d68f01b290e96ab91b542ff79a2) {
+            newEndpoint.functionSelector = this.txSendPost.selector;
+        }
+
+        require(newEndpoint.functionSelector != "",
+            "Not a valid endpointId");
 
         endpointsIds.push(newEndpoint);
 
         emit SetEndpoint(
             endpointsIds.length, 
-            _endpointId, 
-            _functionSelector);
+            newEndpoint.endpointId, 
+            newEndpoint.functionSelector);
     }
 
     function decimals () public view virtual override returns (uint8) {
