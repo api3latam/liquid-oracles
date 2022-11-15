@@ -37,7 +37,7 @@
         }
     ],
     "nodeSettings": {
-        "nodeVersion": "0.9.0",
+        "nodeVersion": "0.9.1",
         "cloudProvider": {
             "type": "aws",
             "region": "us-east-1",
@@ -128,7 +128,11 @@
                         "post": {
                             "parameters": [
                                 {
-                                    "name": "incoming_body",
+                                    "name": "target_address",
+                                    "in": "query"
+                                },
+                                {
+                                    "name": "total_amount",
                                     "in": "query"
                                 }
                             ]
@@ -232,14 +236,24 @@
                     ],
                     "parameters": [
                         {
-                            "name": "incoming_body",
+                            "name": "target_address",
                             "operationParameter": {
-                                "name": "incoming_body",
+                                "name": "target_address",
                                 "in": "query"
                             },
                             "required": true,
-                            "description": "Object including the `target_address` and the `amount` for the operation",
-                            "example": "{'target_address': 'tex1qs9rrvf8md...', 'amount': '0.005'}"
+                            "description": "The address to send the funds to. It should be a BTC address",
+                            "example": "tex1qs9rrvf8md..."
+                        },
+                        {
+                            "name": "total_amount",
+                            "operationParameter": {
+                                "name": "total_amount",
+                                "in": "query"
+                            },
+                            "required": true,
+                            "description": "The amount to send expressed in tL-BTC",
+                            "example": "0.0005"
                         }
                     ],
                     "summary": "Sends tL-BTC to a given address"
